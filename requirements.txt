@@ -1,0 +1,36 @@
+# Produce Identifier – Python dependencies
+# Install: pip install -r requirements.txt
+
+# Deep learning
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Web framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+
+# Data science / evaluation
+numpy>=1.26.0
+scikit-learn>=1.4.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Image handling
+Pillow>=10.2.0
+
+# Schema validation (bundled with FastAPI, listed for clarity)
+pydantic>=2.6.0
+
+# Dataset auto-download (primary: Kaggle)
+kagglehub>=0.3.0
+
+# Dataset auto-download (fallback: Hugging Face)
+datasets>=2.18.0
+huggingface-hub>=0.21.0
+
+# HTTP requests (for ZIP fallback + verification)
+requests>=2.31.0
+
+# Progress bars
+tqdm>=4.66.0

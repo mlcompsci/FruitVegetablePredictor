@@ -1,0 +1,540 @@
+/* ────────────── Reset & Variables ────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --clr-bg: #f4f6f9;
+    --clr-surface: #ffffff;
+    --clr-primary: #2563eb;
+    --clr-primary-hover: #1d4ed8;
+    --clr-fruit: #f59e0b;
+    --clr-fruit-bg: #fef3c7;
+    --clr-veg: #10b981;
+    --clr-veg-bg: #d1fae5;
+    --clr-text: #1e293b;
+    --clr-text-muted: #64748b;
+    --clr-border: #e2e8f0;
+    --clr-error: #ef4444;
+    --clr-warn: #f59e0b;
+    --clr-warn-bg: #fffbeb;
+    --clr-success: #10b981;
+    --clr-success-bg: #ecfdf5;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ────────────── Layout ────────────── */
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+}
+
+/* ────────────── Header ────────────── */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--clr-primary);
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    color: var(--clr-text-muted);
+    font-size: 0.95rem;
+}
+
+/* ────────────── Status Banner ────────────── */
+.status-banner {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+    background: var(--clr-warn-bg);
+    border: 1px solid #fde68a;
+}
+
+.status-banner.success {
+    background: var(--clr-success-bg);
+    border-color: #a7f3d0;
+}
+
+.status-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: var(--clr-warn);
+    color: #fff;
+}
+
+.status-banner.success .status-icon {
+    background: var(--clr-success);
+}
+
+.status-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.status-body p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.status-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-setup {
+    background: var(--clr-warn);
+    color: #fff;
+    padding: 0.45rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-setup:hover {
+    background: #d97706;
+}
+
+.btn-setup:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status-cmd {
+    font-size: 0.78rem;
+    background: rgba(0,0,0,0.06);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    word-break: break-all;
+    color: var(--clr-text-muted);
+}
+
+/* ────────────── Setup Panel ────────────── */
+.setup-panel {
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.setup-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.setup-logs {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.setup-logs .log-line {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.log-icon {
+    flex-shrink: 0;
+}
+
+.log-success { color: #4ade80; }
+.log-fail    { color: #f87171; }
+.log-info    { color: #60a5fa; }
+
+.setup-result {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.setup-result.ok {
+    background: var(--clr-success-bg);
+    color: #047857;
+}
+
+.setup-result.fail {
+    background: #fef2f2;
+    color: var(--clr-error);
+}
+
+/* ────────────── Upload Area ────────────── */
+.upload-section {
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.upload-area {
+    border: 2px dashed var(--clr-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-area:hover,
+.upload-area.drag-over {
+    border-color: var(--clr-primary);
+    background: #eff6ff;
+}
+
+.upload-placeholder {
+    color: var(--clr-text-muted);
+}
+
+.upload-placeholder svg {
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+}
+
+.browse-link {
+    color: var(--clr-primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.upload-hint {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    opacity: 0.7;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 320px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+/* ────────────── Buttons ────────────── */
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    padding: 0.6rem 1.6rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--clr-primary);
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--clr-primary-hover);
+}
+
+.btn-secondary {
+    background: var(--clr-border);
+    color: var(--clr-text);
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* ────────────── Loader ────────────── */
+.loader {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: var(--clr-text-muted);
+}
+
+.spinner {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 0.5rem;
+    border: 3px solid var(--clr-border);
+    border-top-color: var(--clr-primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.spinner-sm {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border-width: 2px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ────────────── Error ────────────── */
+.error-msg {
+    background: #fef2f2;
+    color: var(--clr-error);
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* ────────────── Results ────────────── */
+.results {
+    background: var(--clr-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.results h2 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+/* Prediction cards */
+.prediction-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.pred-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: var(--clr-bg);
+}
+
+.pred-rank {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--clr-primary);
+    min-width: 1.5rem;
+    text-align: center;
+}
+
+.pred-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.pred-label {
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.badge-fruit {
+    background: var(--clr-fruit-bg);
+    color: #b45309;
+}
+
+.badge-vegetable {
+    background: var(--clr-veg-bg);
+    color: #047857;
+}
+
+/* Probability bar */
+.prob-bar-wrap {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--clr-border);
+    margin-top: 0.35rem;
+    overflow: hidden;
+}
+
+.prob-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.prob-bar.fruit {
+    background: var(--clr-fruit);
+}
+
+.prob-bar.vegetable {
+    background: var(--clr-veg);
+}
+
+.pred-pct {
+    font-weight: 700;
+    font-size: 0.95rem;
+    min-width: 52px;
+    text-align: right;
+}
+
+/* Summary */
+.summary-section h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.summary-content {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.summary-card.fruit {
+    background: var(--clr-fruit-bg);
+}
+
+.summary-card.vegetable {
+    background: var(--clr-veg-bg);
+}
+
+.summary-card .cat-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+}
+
+.summary-card .cat-prob {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.summary-card.fruit .cat-label,
+.summary-card.fruit .cat-prob {
+    color: #b45309;
+}
+
+.summary-card.vegetable .cat-label,
+.summary-card.vegetable .cat-prob {
+    color: #047857;
+}
+
+.summary-winner {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+}
+
+.summary-winner strong {
+    text-transform: capitalize;
+}
+
+/* ────────────── Footer ────────────── */
+.footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    color: var(--clr-text-muted);
+    font-size: 0.8rem;
+}
+
+/* ────────────── Utility ────────────── */
+.hidden {
+    display: none !important;
+}
+
+/* ────────────── Responsive ────────────── */
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem 0.75rem 2rem;
+    }
+
+    .header h1 {
+        font-size: 1.4rem;
+    }
+
+    .upload-area {
+        padding: 1.5rem 1rem;
+    }
+
+    .status-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

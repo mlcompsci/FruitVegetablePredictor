@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produce Identifier</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Produce Identifier</h1>
+            <p class="subtitle">Upload an image of a fruit or vegetable to identify it instantly.</p>
+        </header>
+
+        <!-- Status Banner -->
+        <div id="statusBanner" class="status-banner hidden">
+            <div class="status-icon" id="statusIcon">!</div>
+            <div class="status-body">
+                <p id="statusText"></p>
+                <div class="status-actions">
+                    <button id="setupBtn" class="btn btn-setup">Auto Setup &amp; Train (Demo)</button>
+                    <code id="statusCmd" class="status-cmd"></code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setup Progress Panel -->
+        <div id="setupPanel" class="setup-panel hidden">
+            <div class="setup-header">
+                <div class="spinner spinner-sm"></div>
+                <span>Setting up &hellip;</span>
+            </div>
+            <div id="setupLogs" class="setup-logs"></div>
+            <div id="setupResult" class="setup-result hidden"></div>
+        </div>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-placeholder" id="uploadPlaceholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <p>Drag &amp; drop an image here, or <span class="browse-link">browse</span></p>
+                    <p class="upload-hint">Supports JPG, PNG, WebP (max 10 MB)</p>
+                </div>
+                <img id="imagePreview" class="image-preview hidden" alt="Preview" />
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp" hidden />
+            </div>
+
+            <div class="actions">
+                <button id="predictBtn" class="btn btn-primary" disabled>Predict</button>
+                <button id="clearBtn" class="btn btn-secondary hidden">Clear</button>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Analyzing image&hellip;</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMsg" class="error-msg hidden"></div>
+
+        <!-- Results Section -->
+        <section id="results" class="results hidden">
+            <h2>Predictions</h2>
+            <div id="predictionCards" class="prediction-cards"></div>
+
+            <div class="summary-section">
+                <h3>Category Summary</h3>
+                <div id="summaryContent" class="summary-content"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Produce Identifier &mdash; Powered by MobileNetV3 + FastAPI</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

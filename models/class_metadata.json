@@ -1,0 +1,77 @@
+{
+  "beetroot": {
+    "category": "vegetable"
+  },
+  "bell_pepper": {
+    "category": "vegetable"
+  },
+  "cabbage": {
+    "category": "vegetable"
+  },
+  "capsicum": {
+    "category": "vegetable"
+  },
+  "carrot": {
+    "category": "vegetable"
+  },
+  "cauliflower": {
+    "category": "vegetable"
+  },
+  "corn": {
+    "category": "vegetable"
+  },
+  "cucumber": {
+    "category": "vegetable"
+  },
+  "eggplant": {
+    "category": "vegetable"
+  },
+  "garlic": {
+    "category": "vegetable"
+  },
+  "grapes": {
+    "category": "fruit"
+  },
+  "kiwi": {
+    "category": "fruit"
+  },
+  "lemon": {
+    "category": "fruit"
+  },
+  "lettuce": {
+    "category": "vegetable"
+  },
+  "mango": {
+    "category": "fruit"
+  },
+  "onion": {
+    "category": "vegetable"
+  },
+  "pear": {
+    "category": "fruit"
+  },
+  "peas": {
+    "category": "vegetable"
+  },
+  "pineapple": {
+    "category": "fruit"
+  },
+  "raddish": {
+    "category": "vegetable"
+  },
+  "spinach": {
+    "category": "vegetable"
+  },
+  "sweetcorn": {
+    "category": "vegetable"
+  },
+  "tomato": {
+    "category": "vegetable"
+  },
+  "turnip": {
+    "category": "vegetable"
+  },
+  "watermelon": {
+    "category": "fruit"
+  }
+}
