@@ -386,6 +386,7 @@ Approximate timings (varies by hardware and network speed):
 | `RuntimeError: Model not loaded` (API) | Train, then restart server or use /setup-demo |
 | `CUDA out of memory` | Reduce `--batch_size` (e.g., 16 or 8) |
 | `No image classes found` | Check that `data/raw/<class>/` folders contain images |
+| `RangeError [ERR_OUT_OF_RANGE] ... Received >4GB` during deployment | Deploy only app code + model artifacts. Keep local training folders (`data/raw`, `data/processed`, `outputs`) out of the deployment bundle (`.vercelignore` / `.dockerignore` are included). |
 | Slow training on CPU | Expected -- reduce epochs for testing |
 | `kagglehub` import error | `pip install kagglehub` |
 | `datasets` import error | `pip install datasets huggingface-hub` |

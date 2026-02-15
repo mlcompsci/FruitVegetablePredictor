@@ -1,0 +1,18 @@
+# Local training artifacts (can exceed deployment bundle limits)
+data/raw/
+data/processed/
+outputs/
+data/_download_tmp.zip
+data/_zip_tmp/
+
+# Caches / virtual envs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+venv/
+.venv/
+env/
+
+# Local git internals
+.git/

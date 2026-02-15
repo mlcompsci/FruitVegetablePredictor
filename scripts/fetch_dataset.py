@@ -192,33 +192,44 @@ def _fetch_zip(raw_dir: Path) -> bool:
             resp.raise_for_status()
 
             total = int(resp.headers.get("content-length", 0))
-            buf = io.BytesIO()
+            zip_path = raw_dir.parent / "_download_tmp.zip"
+            if zip_path.exists():
+                zip_path.unlink(missing_ok=True)
             downloaded = 0
-            for chunk in resp.iter_content(chunk_size=1024 * 256):
-                buf.write(chunk)
-                downloaded += len(chunk)
-                if total:
-                    pct = downloaded * 100 // total
-                    print(f"\r[FETCH]   Downloading: {pct}%  ({downloaded // 1024 // 1024} MB)", end="", flush=True)
+            with open(zip_path, "wb") as fh:
+                for chunk in resp.iter_content(chunk_size=1024 * 256):
+                    if not chunk:
+                        continue
+                    fh.write(chunk)
+                    downloaded += len(chunk)
+                    if total:
+                        pct = downloaded * 100 // total
+                        print(f"\r[FETCH]   Downloading: {pct}%  ({downloaded // 1024 // 1024} MB)", end="", flush=True)
             print()
 
-            buf.seek(0)
             tmp_dir = raw_dir.parent / "_zip_tmp"
             if tmp_dir.exists():
                 shutil.rmtree(tmp_dir)
             tmp_dir.mkdir(parents=True)
 
-            with zipfile.ZipFile(buf) as zf:
+            with zipfile.ZipFile(zip_path) as zf:
                 zf.extractall(tmp_dir)
 
             _ingest_folder_tree(tmp_dir, raw_dir)
+            zip_path.unlink(missing_ok=True)
             shutil.rmtree(tmp_dir, ignore_errors=True)
             return True
 
         except KeyboardInterrupt:
             print("\n[FETCH]   Download interrupted by user.")
+            zip_path = raw_dir.parent / "_download_tmp.zip"
+            zip_path.unlink(missing_ok=True)
+            shutil.rmtree(raw_dir.parent / "_zip_tmp", ignore_errors=True)
             raise
         except Exception as exc:
+            zip_path = raw_dir.parent / "_download_tmp.zip"
+            zip_path.unlink(missing_ok=True)
+            shutil.rmtree(raw_dir.parent / "_zip_tmp", ignore_errors=True)
             print(f"[FETCH]   ZIP download attempt {attempt} failed: {exc}")
 
     return False

@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import asyncio
 import io
-import sys
 import threading
 import time
 from contextlib import asynccontextmanager, redirect_stdout
@@ -53,6 +52,19 @@ MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 # ───────────────── setup lock ──────────────────────────────────
 _setup_lock = threading.Lock()
 _setup_running = False
+
+
+class _DiscardStdout(io.TextIOBase):
+    """Sink writer used to suppress setup logs without buffering them."""
+
+    def write(self, text: str) -> int:
+        return len(text)
+
+    def flush(self) -> None:
+        return None
+
+
+_SETUP_STDOUT_SINK = _DiscardStdout()
 
 
 # ───────────────── helpers ─────────────────────────────────────
@@ -219,8 +231,6 @@ def _run_setup_sync() -> SetupDemoResponse:
     start = time.time()
 
     try:
-        # Capture stdout
-        log_buf = io.StringIO()
 
         # Step 1: Fetch dataset
         logs.append(SetupLogEntry(step="fetch", message="Checking / downloading dataset ...", success=True))
@@ -230,7 +240,7 @@ def _run_setup_sync() -> SetupDemoResponse:
             if raw_data_sufficient(DATA_RAW_DIR, min_samples=10):
                 logs.append(SetupLogEntry(step="fetch", message="Raw data already present.", success=True))
             else:
-                with redirect_stdout(log_buf):
+                with redirect_stdout(_SETUP_STDOUT_SINK):
                     ok = fetch_dataset(raw_dir=DATA_RAW_DIR, min_samples=10, max_classes=25)
                 if ok:
                     logs.append(SetupLogEntry(step="fetch", message="Dataset downloaded successfully.", success=True))
@@ -260,7 +270,7 @@ def _run_setup_sync() -> SetupDemoResponse:
                     success=False, logs=logs, message="No image classes in raw data.",
                     duration_seconds=round(time.time() - start, 1),
                 )
-            with redirect_stdout(log_buf):
+            with redirect_stdout(_SETUP_STDOUT_SINK):
                 splits = stratified_split(class_images)
                 copy_split(splits, DATA_PROCESSED_DIR)
             logs.append(SetupLogEntry(
@@ -280,7 +290,7 @@ def _run_setup_sync() -> SetupDemoResponse:
         try:
             from src.train import train
 
-            with redirect_stdout(log_buf):
+            with redirect_stdout(_SETUP_STDOUT_SINK):
                 train(
                     data_dir=str(DATA_PROCESSED_DIR),
                     epochs=3,

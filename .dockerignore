@@ -1,0 +1,19 @@
+# Local training artifacts (avoid huge Docker build context)
+data/raw/
+data/processed/
+outputs/
+data/_download_tmp.zip
+data/_zip_tmp/
+
+# Python cache / env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+venv/
+.venv/
+env/
+
+# VCS
+.git/
+.gitignore
